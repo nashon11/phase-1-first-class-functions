@@ -1,6 +1,30 @@
 const chai = require("chai");
 const spies = require("chai-spies");
+const expect = chai.expect; // Import the 'expect' assertion style
 chai.use(spies);
+
+// Define the functions
+
+function receivesAFunction(callback) {
+  // Call the provided callback function
+  callback();
+}
+
+function returnsANamedFunction() {
+  // Return a named function
+  return function namedFunction() {
+    // Function body
+  };
+}
+
+function returnsAnAnonymousFunction() {
+  // Return an anonymous function
+  return function () {
+    // Function body
+  };
+}
+
+// Write the tests
 
 describe("index", () => {
   describe("receivesAFunction(callback)", () => {
@@ -9,12 +33,12 @@ describe("index", () => {
 
       receivesAFunction(spy);
 
-      expect(spy).to.have.been.called();
+      expect(spy).to.have.been.called(); // Use Chai Spies to verify function invocation
     });
   });
 
   describe("returnsANamedFunction()", () => {
-    var fn;
+    let fn;
 
     before(() => {
       fn = returnsANamedFunction();
@@ -25,12 +49,12 @@ describe("index", () => {
     });
 
     it("returns a named function", () => {
-      expect(fn.name).not.to.eql("");
+      expect(fn.name).to.not.be.empty;
     });
   });
 
   describe("returnsAnAnonymousFunction()", () => {
-    var fn;
+    let fn;
 
     before(() => {
       fn = returnsAnAnonymousFunction();
@@ -41,7 +65,8 @@ describe("index", () => {
     });
 
     it("returns an anonymous function", () => {
-      expect(fn.name).to.eql("");
+      expect(fn.name).to.be.empty;
     });
   });
 });
+
